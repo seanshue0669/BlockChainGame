@@ -1,0 +1,25 @@
+.main-root {
+    flex-direction: row;
+    width: 100%;
+    height: 100%;
+    display: flex;
+}
+
+.right-panel {
+    flex-grow: 1;
+    flex-shrink: 1;
+    width: 0;
+    background-color: rgb(136, 136, 204);
+    height: 100%;
+}
+
+.left-panel {
+    width: 30%;
+    flex-shrink: 1;
+    flex-grow: 1;
+    background-color: rgb(34, 34, 34);
+    -unity-mask-image: resource("MainMenu_Mask.png")
+    -unity-mask-mode: mask;
+    height: 100%;
+    padding: 20px;
+}

@@ -1,7 +1,0 @@
-<engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <Style src="project://database/Assets/Resource/UIToolkit/MainMenuUSS.uss?fileID=7433441132597879392&amp;guid=c76be0a268045d242b8ccd44eb441687&amp;type=3#MainMenuUSS" />
-    <engine:VisualElement name="main-root" class="main-root" style="flex-grow: 1; flex-direction: row; align-content: auto; align-self: auto; align-items: flex-end; flex-wrap: nowrap;">
-        <engine:VisualElement name="left-panel" class="left-panel" style="flex-grow: 0; background-color: rgb(136, 136, 204); flex-shrink: 0;" />
-        <engine:VisualElement name="right-panel" class="right-panel" style="flex-grow: 1; opacity: 1; width: 0; background-color: rgb(34, 34, 34);" />
-    </engine:VisualElement>
-</engine:UXML>
