@@ -1549,7 +1549,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotationAxis: 2
-  speed: 180
+  speed: 90
 --- !u!114 &1334980513
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1563,7 +1563,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotationAxis: 1
-  speed: 90
+  speed: 180
 --- !u!4 &1348892526 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3404098539763958853, guid: 52063e4d289c8d64ab48951aba03a0a6, type: 3}
@@ -2298,7 +2298,7 @@ Transform:
   m_GameObject: {fileID: 2102637004}
   serializedVersion: 2
   m_LocalRotation: {x: -0.48168746, y: -0.3345028, z: 0.028007742, w: 0.8095065}
-  m_LocalPosition: {x: 0.271, y: 4.148, z: -2.247}
+  m_LocalPosition: {x: 0.424, y: 4.22, z: -2.146}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
