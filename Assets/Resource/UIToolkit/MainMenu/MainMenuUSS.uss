@@ -74,11 +74,11 @@
     flex-grow: 0.2;
     -unity-font-style: bold;
     font-size: 36px;
-    color: rgb(255, 255, 255);
-    border-left-color: rgb(255, 255, 255);
-    border-right-color: rgb(255, 255, 255);
-    border-top-color: rgb(255, 255, 255);
-    border-bottom-color: rgb(255, 255, 255);
+    color: rgb(255, 76, 92);
+    border-left-color: rgb(255, 76, 92);
+    border-right-color: rgb(255, 76, 92);
+    border-top-color: rgb(255, 76, 92);
+    border-bottom-color: rgb(255, 76, 92);
     background-color: rgb(120, 132, 253);
     -unity-text-align: middle-right;
     background-size: 70% 100%;
@@ -87,4 +87,11 @@
     transition-timing-function: ease-out-sine;
     transition-delay: 0s;
     transition-duration: 0.5s;
+}
+
+.titleScale {
+    scale: 1.1 1.1;
+    transition-duration: 2s;
+    transition-property: scale;
+    transition-timing-function: ease-in-out;
 }
