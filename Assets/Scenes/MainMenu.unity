@@ -955,6 +955,7 @@ Transform:
   - {fileID: 1816016876}
   - {fileID: 437170805}
   - {fileID: 1566063422}
+  - {fileID: 1348892526}
   m_Father: {fileID: 1661366643}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &740343046
@@ -1563,6 +1564,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rotationAxis: 1
   speed: 90
+--- !u!4 &1348892526 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3404098539763958853, guid: 52063e4d289c8d64ab48951aba03a0a6, type: 3}
+  m_PrefabInstance: {fileID: 1521173320}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1395050112 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5287713367912859328, guid: 49866ec1029b741468ca8997945363cb, type: 3}
@@ -1601,6 +1607,63 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rotationAxis: 1
   speed: 90
+--- !u!1001 &1521173320
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 689693927}
+    m_Modifications:
+    - target: {fileID: 3404098539763603557, guid: 52063e4d289c8d64ab48951aba03a0a6, type: 3}
+      propertyPath: m_Name
+      value: Refrigerator
+      objectReference: {fileID: 0}
+    - target: {fileID: 3404098539763958853, guid: 52063e4d289c8d64ab48951aba03a0a6, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -2.57
+      objectReference: {fileID: 0}
+    - target: {fileID: 3404098539763958853, guid: 52063e4d289c8d64ab48951aba03a0a6, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.238
+      objectReference: {fileID: 0}
+    - target: {fileID: 3404098539763958853, guid: 52063e4d289c8d64ab48951aba03a0a6, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -2.597
+      objectReference: {fileID: 0}
+    - target: {fileID: 3404098539763958853, guid: 52063e4d289c8d64ab48951aba03a0a6, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071069
+      objectReference: {fileID: 0}
+    - target: {fileID: 3404098539763958853, guid: 52063e4d289c8d64ab48951aba03a0a6, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3404098539763958853, guid: 52063e4d289c8d64ab48951aba03a0a6, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.70710677
+      objectReference: {fileID: 0}
+    - target: {fileID: 3404098539763958853, guid: 52063e4d289c8d64ab48951aba03a0a6, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3404098539763958853, guid: 52063e4d289c8d64ab48951aba03a0a6, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3404098539763958853, guid: 52063e4d289c8d64ab48951aba03a0a6, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 3404098539763958853, guid: 52063e4d289c8d64ab48951aba03a0a6, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 52063e4d289c8d64ab48951aba03a0a6, type: 3}
 --- !u!1 &1529741660
 GameObject:
   m_ObjectHideFlags: 0
@@ -2234,14 +2297,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2102637004}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.39137244, y: -0.36505777, z: -0.016997466, w: 0.844554}
-  m_LocalPosition: {x: -0.108, y: 4.104, z: -2.407}
+  m_LocalRotation: {x: -0.48168746, y: -0.3345028, z: 0.028007742, w: 0.8095065}
+  m_LocalPosition: {x: 0.271, y: 4.148, z: -2.247}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1334980511}
   m_Father: {fileID: 1661366643}
-  m_LocalEulerAnglesHint: {x: -42.336, y: -54.703, z: 20.348}
+  m_LocalEulerAnglesHint: {x: -49.563, y: -61.23, z: 34.524}
 --- !u!114 &2102637006
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2255,7 +2318,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotationAxis: 1
-  speed: 50
+  speed: 20
 --- !u!1 &2132773337
 GameObject:
   m_ObjectHideFlags: 0
