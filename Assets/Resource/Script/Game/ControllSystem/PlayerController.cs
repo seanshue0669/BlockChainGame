@@ -3,15 +3,22 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField]
-    public float forwardSpeed = 0.1f;
-    public float slideSpeed = 0.5f;
-    public float jumpforce = 10f;
+    public float minforwardSpeed = 2f;
+    public float maxforwardSpeed = 5f;
+    public float slideSpeed = 0.2f;
+    public float jumpforce = 3f;
     public float lateralSpeed = 3f;
+    public float smoothingFactor = 15f;
 
+    [Header("Current speed")]
+    [SerializeField]
+    private float forwardSpeed = 2f;
 
     private bool isGrounded = false;
-    private float groundBufferTime = 0.5f; 
+    private bool jumpRequested = false;
+    private float groundBufferTime = 0.2f; 
     private float lastGroundedTime = 0f;
+    private float moveXInput = 0f;
     private Rigidbody _playerRB;
 
 
@@ -19,23 +26,33 @@ public class PlayerController : MonoBehaviour
     {
         _playerRB = GetComponent<Rigidbody>();
     }
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.S))
+        {
+            jumpRequested = true;
+        }
+
+        moveXInput = 0f;
+        if (Input.GetKey(KeyCode.A)) moveXInput = -slideSpeed;
+        if (Input.GetKey(KeyCode.D)) moveXInput = slideSpeed;
+        float t = 1f - Mathf.Exp(-Time.time / smoothingFactor);
+        forwardSpeed = Mathf.Lerp(minforwardSpeed, maxforwardSpeed, t);
+    }
+
     [System.Obsolete]
-    void FixedUpdate()
+    private void FixedUpdate()
     {
         bool canJump = isGrounded || (Time.time - lastGroundedTime <= groundBufferTime);
 
-        if (canJump && (Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.S)))
+        if (canJump && jumpRequested)
         {
             MoveUp();
             isGrounded = false;
+            jumpRequested = false;
         }
 
-
-        float moveX = 0f;
-        if (Input.GetKey(KeyCode.A)) moveX = -slideSpeed;
-        if (Input.GetKey(KeyCode.D)) moveX = slideSpeed;
-
-        Move(moveX, forwardSpeed);
+        Move(moveXInput, forwardSpeed);
     }
     private void OnCollisionEnter(Collision collision)
     {
@@ -68,6 +85,6 @@ public class PlayerController : MonoBehaviour
     [System.Obsolete]
     private void MoveUp()
     {
-        _playerRB.AddForce(Vector3.up * jumpforce, ForceMode.Impulse);
+        if(isGrounded) _playerRB.AddForce(Vector3.up * jumpforce, ForceMode.Impulse);
     }
 }
