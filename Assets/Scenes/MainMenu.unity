@@ -2699,6 +2699,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rotationAxis: 1
   speed: 90
+--- !u!114 &1255130295
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1255130288}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e988524ff96ef43488dc0bb65b2b0270, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveAxis: 1
+  amplitude: 0.15
+  speed: 0.1
 --- !u!1001 &1257277925
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3029,7 +3044,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5287713367912372960, guid: 49866ec1029b741468ca8997945363cb, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -3.034
+      value: -2.925
       objectReference: {fileID: 0}
     - target: {fileID: 5287713367912372960, guid: 49866ec1029b741468ca8997945363cb, type: 3}
       propertyPath: m_LocalPosition.z
@@ -3077,6 +3092,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 5287713367912859328, guid: 49866ec1029b741468ca8997945363cb, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1255130290}
+    - targetCorrespondingSourceObject: {fileID: 5287713367912859328, guid: 49866ec1029b741468ca8997945363cb, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1255130295}
   m_SourcePrefab: {fileID: 100100000, guid: 49866ec1029b741468ca8997945363cb, type: 3}
 --- !u!4 &1386219161 stripped
 Transform:

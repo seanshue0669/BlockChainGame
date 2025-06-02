@@ -3,40 +3,66 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField]
-    public float speed = 0.1f;
+    public float forwardSpeed = 0.1f;
+    public float slideSpeed = 0.5f;
     public float jumpforce = 10f;
+    public float lateralSpeed = 3f;
 
-    Rigidbody _playerRB;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+
+    private bool isGrounded = false;
+    private float groundBufferTime = 0.5f; 
+    private float lastGroundedTime = 0f;
+    private Rigidbody _playerRB;
+
+
     void Start()
     {
         _playerRB = GetComponent<Rigidbody>();
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
     [System.Obsolete]
-    private void FixedUpdate()
+    void FixedUpdate()
     {
-        if (Input.GetKeyDown(KeyCode.Space)|| Input.GetKeyDown(KeyCode.S))
+        bool canJump = isGrounded || (Time.time - lastGroundedTime <= groundBufferTime);
+
+        if (canJump && (Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.S)))
         {
             MoveUp();
+            isGrounded = false;
         }
-        MoveForward(speed);
+
+
+        float moveX = 0f;
+        if (Input.GetKey(KeyCode.A)) moveX = -slideSpeed;
+        if (Input.GetKey(KeyCode.D)) moveX = slideSpeed;
+
+        Move(moveX, forwardSpeed);
+    }
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            isGrounded = true;
+            lastGroundedTime = Time.time;
+        }
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            isGrounded = false;
+        }
     }
 
     [System.Obsolete]
-    private void MoveForward(float speedFac)
+    private void Move(float xInput, float zSpeed)
     {
         Vector3 currentVelocity = _playerRB.velocity;
+
         _playerRB.velocity = new Vector3(
-            currentVelocity.x,
-            currentVelocity.y, 
-            speedFac
+            xInput * lateralSpeed,     
+            currentVelocity.y,         
+            zSpeed                     
         );
     }
     [System.Obsolete]
