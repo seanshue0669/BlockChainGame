@@ -1,0 +1,6 @@
+<engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/Resource/UIToolkit/Game/GameMenu.uss?fileID=7433441132597879392&amp;guid=2e62fe19a1d943c4598bdae154083cb4&amp;type=3#GameMenu" />
+    <engine:VisualElement name="main-root" style="flex-grow: 1;">
+        <engine:Button text="BackToMenu" name="backToMenu" parse-escape-sequences="false" class="button" style="background-image: url(&quot;project://database/Assets/UI%20Toolkit/UnityThemes/UnityDefaultRuntimeTheme.tss?fileID=-2236324273849735119&amp;guid=a3311588d2b443b429ec3af663976786&amp;type=3#arrow-left@2x&quot;); background-color: rgb(255, 124, 124); -unity-background-image-tint-color: rgb(255, 255, 255); height: 8%; width: 24%; background-size: 20% 100%; background-position-x: left 0; color: rgb(255, 255, 255); font-size: 24px; -unity-text-align: middle-right; border-top-left-radius: 26px; border-top-right-radius: 26px; border-bottom-right-radius: 26px; border-bottom-left-radius: 26px; margin-top: 16px; margin-bottom: 16px; margin-right: 12px; margin-left: 14px;" />
+    </engine:VisualElement>
+</engine:UXML>

@@ -10,6 +10,7 @@ public class SceneController : MonoBehaviour
     {
         get
         {
+            // Make sure only one scipt exisit in the scene
             if (_instance == null)
             {
                 _instance = FindFirstObjectByType<SceneController>();
@@ -37,8 +38,6 @@ public class SceneController : MonoBehaviour
         if (_sceneNameToIndex.TryGetValue(sceneName, out int index))
         {
             UnityEngine.SceneManagement.SceneManager.LoadScene(index);
-            //Call the transition animation?
-
         }
         else
         {
