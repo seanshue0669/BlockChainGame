@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 public class MainUIController : MonoBehaviour
 {
@@ -35,20 +36,21 @@ public class MainUIController : MonoBehaviour
 
     private void bindUIEvent(VisualElement root)
     {
-        _startButton = root.Q<Button>("StartButton");
+        _startButton    = root.Q<Button>("StartButton");
         _settingsButton = root.Q<Button>("SettingButton");
-        _lotteryButton = root.Q<Button>("LotteryButton");
-        _marketButton = root.Q<Button>("MarketButton");
+        _lotteryButton  = root.Q<Button>("LotteryButton");
+        _marketButton   = root.Q<Button>("MarketButton");
 
-        _startButton?.RegisterCallback<ClickEvent>(evt => OnStartClicked());
-        _settingsButton?.RegisterCallback<ClickEvent>(evt => OnSettingsClicked());
-        _lotteryButton?.RegisterCallback<ClickEvent>(evt => OnLotteryClicked());
-        _marketButton?.RegisterCallback<ClickEvent>(evt => OnMarketClicked());
+        _startButton?.RegisterCallback      <ClickEvent>(evt => OnStartClicked());
+        _settingsButton?.RegisterCallback   <ClickEvent>(evt => OnSettingsClicked());
+        _lotteryButton?.RegisterCallback    <ClickEvent>(evt => OnLotteryClicked());
+        _marketButton?.RegisterCallback     <ClickEvent>(evt => OnMarketClicked());
     }
     #region CB_Function
     private void OnStartClicked()
     {
         Debug.Log("Start button clicked");
+        SceneController.Instance.SwitchToScene("Game");
     }
 
     private void OnSettingsClicked()
@@ -59,11 +61,13 @@ public class MainUIController : MonoBehaviour
     private void OnLotteryClicked()
     {
         Debug.Log("Lottery button clicked");
+        SceneController.Instance.SwitchToScene("Lottery");
     }
 
     private void OnMarketClicked()
     {
         Debug.Log("Market button clicked");
+        SceneController.Instance.SwitchToScene("Market");
     }
 
     #endregion
