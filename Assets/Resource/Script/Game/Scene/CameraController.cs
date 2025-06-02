@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CameraController : MonoBehaviour
 {
@@ -18,6 +19,7 @@ public class CameraController : MonoBehaviour
                 {
                     GameObject go = GameObject.Find("Manager");
                     _instance = go.AddComponent<CameraController>();
+                    DontDestroyOnLoad(go);
                 }
             }
 
@@ -25,10 +27,18 @@ public class CameraController : MonoBehaviour
         }
     }
 
-    public void OnEnable()
+    void Awake()
     {
-        _camera = Camera.main;
+        DontDestroyOnLoad(gameObject); 
+        SceneManager.sceneLoaded += OnSceneLoaded;
     }
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        _camera = Camera.main; 
+        Debug.Log("Rebind Camera.main = " + _camera);
+    }
+
+
     public void SwitchBetween(string target)
     {
         if (_camera == null)
@@ -38,9 +48,10 @@ public class CameraController : MonoBehaviour
         }
         GameObject lobby = GameObject.Find("lobby_pos");
         GameObject setting = GameObject.Find("setting_pos");
+
         if (lobby == null || setting == null)
         {
-            Debug.LogWarning("pos cant find¡I");
+            Debug.LogWarning("Object cant find¡I");
         }
 
         Transform lobbyPos = lobby.transform;
@@ -49,9 +60,11 @@ public class CameraController : MonoBehaviour
         {
             case "settings":
                 _camera.transform.position = settingPos.position;
+                _camera.transform.rotation = settingPos.rotation;
                 break;
             case "lobby":
                 _camera.transform.position = lobbyPos.position;
+                _camera.transform.rotation = lobbyPos.rotation;
                 break;
             default:
                 Debug.LogWarning("Unknown Target¡G" + target);

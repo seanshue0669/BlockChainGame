@@ -5,11 +5,19 @@
             <engine:VisualElement name="title-container" style="flex-grow: 1; justify-content: center; width: 120%; position: relative; background-size: 100% 80%; height: 50%; align-items: flex-start; align-self: flex-start; rotate: 7deg;">
                 <engine:Label text="Tomato Game" name="GameTitle" style="font-size: 94%; -unity-font-style: bold; width: 100%; color: rgb(255, 251, 201); -unity-text-outline-width: 1px; -unity-text-outline-color: rgb(0, 0, 0); transition-duration: 2s; transition-timing-function: linear;" />
             </engine:VisualElement>
-            <engine:VisualElement name="buttton-container" style="flex-grow: 1; justify-content: center; width: 100%; position: relative; background-size: 100% 70%; height: 80%; align-items: flex-start; align-self: flex-start;">
-                <engine:Button text="Start" name="StartButton" class="tilt button" />
-                <engine:Button text="Setting" name="SettingButton" class="tilt button" />
-                <engine:Button text="Tomato Lottery" name="LotteryButton" class="tilt button" />
-                <engine:Button text="Tomato Market&#10;" name="MarketButton" class="tilt button" />
+            <engine:VisualElement name="buttton-container-root" enabled="true" style="flex-grow: 1; justify-content: center; width: 100%; position: relative; background-size: 100% 70%; height: 100%; align-items: flex-start; align-self: flex-start; flex-basis: auto; flex-direction: column;">
+                <engine:VisualElement name="buttton-container-lobby" enabled="true" style="flex-grow: 1; justify-content: center; width: 100%; position: absolute; background-size: 100% 70%; height: 80%; align-items: flex-start; align-self: flex-start; opacity: 1;">
+                    <engine:Button text="Start" name="StartButton" class="tilt button" />
+                    <engine:Button text="Setting" name="SettingButton" class="tilt button" />
+                    <engine:Button text="Tomato Lottery" name="LotteryButton" class="tilt button" />
+                    <engine:Button text="Tomato Market&#10;" name="MarketButton" class="tilt button" />
+                </engine:VisualElement>
+                <engine:VisualElement name="buttton-container-settings" enabled="true" style="flex-grow: 1; justify-content: center; width: 100%; position: absolute; background-size: 100% 70%; height: 80%; align-items: flex-start; align-self: flex-start;">
+                    <engine:Button text="Back" name="BackButton" class="tilt button" />
+                    <engine:Button text="Bind Wallet" name="BindWalletButton" class="tilt button" />
+                    <engine:Button text="Choose skin" name="ChooseSkinButton" class="tilt button" />
+                    <engine:Button text="View Skin" name="ViewSkinButton" class="tilt button" />
+                </engine:VisualElement>
             </engine:VisualElement>
         </engine:VisualElement>
         <engine:VisualElement name="right-panel" class="right-panel" style="flex-grow: 1; opacity: 1; width: 0; background-color: rgba(34, 34, 34, 0);" />
