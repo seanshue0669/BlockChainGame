@@ -48,6 +48,6 @@ public class GameDataObjectSO : ScriptableObject
         float a = 0.1f;
         float b = 0.5f;
 
-        return 1f + a * (Mathf.Exp(b*_totalPlayTime) - 1f);
+        return 1f + a * _totalPlayTime;
     }
 }
