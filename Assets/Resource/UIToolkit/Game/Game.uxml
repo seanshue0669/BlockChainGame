@@ -2,5 +2,31 @@
     <Style src="project://database/Assets/Resource/UIToolkit/Game/GameMenu.uss?fileID=7433441132597879392&amp;guid=2e62fe19a1d943c4598bdae154083cb4&amp;type=3#GameMenu" />
     <engine:VisualElement name="main-root" style="flex-grow: 1;">
         <engine:Button text="BackToMenu" name="backToMenu" parse-escape-sequences="false" class="button" style="background-image: url(&quot;project://database/Assets/UI%20Toolkit/UnityThemes/UnityDefaultRuntimeTheme.tss?fileID=-2236324273849735119&amp;guid=a3311588d2b443b429ec3af663976786&amp;type=3#arrow-left@2x&quot;); background-color: rgb(255, 124, 124); -unity-background-image-tint-color: rgb(255, 255, 255); height: 8%; width: 24%; background-size: 20% 100%; background-position-x: left 0; color: rgb(255, 255, 255); font-size: 24px; -unity-text-align: middle-right; border-top-left-radius: 26px; border-top-right-radius: 26px; border-bottom-right-radius: 26px; border-bottom-left-radius: 26px; margin-top: 16px; margin-bottom: 16px; margin-right: 12px; margin-left: 14px;" />
+        <engine:VisualElement name="scoreboard" style="flex-grow: 1; position: absolute; align-items: center; width: 100%; height: 85%; flex-direction: column; top: 18%; justify-content: center;">
+            <engine:VisualElement style="flex-grow: 1; flex-direction: row; height: auto; align-items: flex-start;">
+                <engine:Label text="Playing Time(s):" name="Label" style="font-size: 54px; background-color: rgba(255, 0, 0, 0.51); height: auto;" />
+                <engine:Label text="Label" name="Time" data-source="project://database/Assets/Resource/Script/Game/ScoreSystem/GameData/GameDataObjectSO.asset?fileID=11400000&amp;guid=0688382a189c6a3419af9b6e74e54886&amp;type=2#GameDataObjectSO" style="font-size: 50px; background-color: rgba(255, 255, 255, 0.67); height: auto;">
+                    <Bindings>
+                        <engine:DataBinding property="text" data-source-path="_totalPlayTime" data-source="project://database/Assets/Resource/Script/Game/ScoreSystem/GameData/GameDataObjectSO.asset?fileID=11400000&amp;guid=0688382a189c6a3419af9b6e74e54886&amp;type=2#GameDataObjectSO" binding-mode="ToTarget" />
+                    </Bindings>
+                </engine:Label>
+            </engine:VisualElement>
+            <engine:VisualElement style="flex-grow: 1; align-self: auto; flex-direction: row; height: auto; align-items: flex-start;">
+                <engine:Label text="Reward:" style="font-size: 54px; background-color: rgba(255, 0, 0, 0.57); height: auto;" />
+                <engine:Label text="Label" name="score" data-source="project://database/Assets/Resource/Script/Game/ScoreSystem/GameData/GameDataObjectSO.asset?fileID=11400000&amp;guid=0688382a189c6a3419af9b6e74e54886&amp;type=2#GameDataObjectSO" data-source-path="score" style="font-size: 50px; height: auto; background-color: rgba(255, 255, 255, 0.67);">
+                    <Bindings>
+                        <engine:DataBinding property="text" data-source-path="score" data-source="project://database/Assets/Resource/Script/Game/ScoreSystem/GameData/GameDataObjectSO.asset?fileID=11400000&amp;guid=0688382a189c6a3419af9b6e74e54886&amp;type=2#GameDataObjectSO" binding-mode="ToTarget" />
+                    </Bindings>
+                </engine:Label>
+            </engine:VisualElement>
+            <engine:VisualElement style="flex-grow: 1; align-items: flex-start; justify-content: flex-start; flex-direction: row; height: auto;">
+                <engine:Label text="Reward:" style="font-size: 54px; height: auto; background-color: rgba(255, 0, 0, 0.57);" />
+                <engine:Label text="Label" name="result" data-source="project://database/Assets/Resource/Script/Game/ScoreSystem/GameData/GameDataObjectSO.asset?fileID=11400000&amp;guid=0688382a189c6a3419af9b6e74e54886&amp;type=2#GameDataObjectSO" data-source-path="earn" style="font-size: 56px; background-color: rgba(255, 255, 255, 0.67);">
+                    <Bindings>
+                        <engine:DataBinding property="text" data-source-path="earn" data-source="project://database/Assets/Resource/Script/Game/ScoreSystem/GameData/GameDataObjectSO.asset?fileID=11400000&amp;guid=0688382a189c6a3419af9b6e74e54886&amp;type=2#GameDataObjectSO" binding-mode="ToTarget" />
+                    </Bindings>
+                </engine:Label>
+            </engine:VisualElement>
+        </engine:VisualElement>
     </engine:VisualElement>
 </engine:UXML>
