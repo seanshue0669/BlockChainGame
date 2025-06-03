@@ -22,10 +22,12 @@ public class PlayerController : MonoBehaviour
     private float moveXInput = 0f;
     private Rigidbody _playerRB;
 
-
+    private float _startTimeStrap;
     void Start()
     {
         _playerRB = GetComponent<Rigidbody>();
+        _startTimeStrap = Time.time;
+
     }
     private void Update()
     {
@@ -37,7 +39,7 @@ public class PlayerController : MonoBehaviour
         moveXInput = 0f;
         if (UnityEngine.Input.GetKey(KeyCode.A)) moveXInput = -slideSpeed;
         if (UnityEngine.Input.GetKey(KeyCode.D)) moveXInput = slideSpeed;
-        float t = 1f - Mathf.Exp(-Time.time / smoothingFactor);
+        float t = 1f - Mathf.Exp(-(Time.time- _startTimeStrap) / smoothingFactor);
         forwardSpeed = Mathf.Lerp(minforwardSpeed, maxforwardSpeed, t);
     }
 
