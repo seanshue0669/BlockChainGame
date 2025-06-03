@@ -22,6 +22,8 @@ public class MainUIController : MonoBehaviour
     private Button _chooseSkinButton;
     private Button _viewSkinButton;
 
+    private VisualElement _skinViewGroup;
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -56,6 +58,9 @@ public class MainUIController : MonoBehaviour
         _lobbyGroup.style.display = DisplayStyle.Flex;
         _settingsGroup = root.Q<VisualElement>("buttton-container-settings");
         _settingsGroup.style.display = DisplayStyle.None;
+
+        _skinViewGroup = root.Q<VisualElement>("right-panel");
+        _skinViewGroup.style.display = DisplayStyle.None;
     }
 
 
@@ -133,6 +138,7 @@ public class MainUIController : MonoBehaviour
     }
     private void OnViewSkinClicked()
     {
+        _skinViewGroup.style.display = DisplayStyle.Flex;
         Debug.Log("View Skin button clicked");
     }
     #endregion
