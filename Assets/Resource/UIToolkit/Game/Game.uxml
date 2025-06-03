@@ -12,7 +12,7 @@
                 </engine:Label>
             </engine:VisualElement>
             <engine:VisualElement style="flex-grow: 1; align-self: auto; flex-direction: row; height: auto; align-items: flex-start;">
-                <engine:Label text="Reward:" style="font-size: 54px; background-color: rgba(255, 0, 0, 0.57); height: auto;" />
+                <engine:Label text="Score:" style="font-size: 54px; background-color: rgba(255, 0, 0, 0.57); height: auto;" />
                 <engine:Label text="Label" name="score" data-source="project://database/Assets/Resource/Script/Game/ScoreSystem/GameData/GameDataObjectSO.asset?fileID=11400000&amp;guid=0688382a189c6a3419af9b6e74e54886&amp;type=2#GameDataObjectSO" data-source-path="score" style="font-size: 50px; height: auto; background-color: rgba(255, 255, 255, 0.67);">
                     <Bindings>
                         <engine:DataBinding property="text" data-source-path="score" data-source="project://database/Assets/Resource/Script/Game/ScoreSystem/GameData/GameDataObjectSO.asset?fileID=11400000&amp;guid=0688382a189c6a3419af9b6e74e54886&amp;type=2#GameDataObjectSO" binding-mode="ToTarget" />
