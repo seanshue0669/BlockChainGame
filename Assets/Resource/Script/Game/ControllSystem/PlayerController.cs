@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Windows;
 
 public class PlayerController : MonoBehaviour
 {
@@ -28,14 +29,14 @@ public class PlayerController : MonoBehaviour
     }
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.S))
+        if (UnityEngine.Input.GetKeyDown(KeyCode.Space) || UnityEngine.Input.GetKeyDown(KeyCode.S))
         {
             jumpRequested = true;
         }
 
         moveXInput = 0f;
-        if (Input.GetKey(KeyCode.A)) moveXInput = -slideSpeed;
-        if (Input.GetKey(KeyCode.D)) moveXInput = slideSpeed;
+        if (UnityEngine.Input.GetKey(KeyCode.A)) moveXInput = -slideSpeed;
+        if (UnityEngine.Input.GetKey(KeyCode.D)) moveXInput = slideSpeed;
         float t = 1f - Mathf.Exp(-Time.time / smoothingFactor);
         forwardSpeed = Mathf.Lerp(minforwardSpeed, maxforwardSpeed, t);
     }
@@ -85,6 +86,15 @@ public class PlayerController : MonoBehaviour
     [System.Obsolete]
     private void MoveUp()
     {
-        if(isGrounded) _playerRB.AddForce(Vector3.up * jumpforce, ForceMode.Impulse);
+        if (isGrounded)
+        {
+            Vector3 currentVelocity = _playerRB.velocity;
+
+            _playerRB.velocity = new Vector3(
+                currentVelocity.x,
+                jumpforce,
+                currentVelocity.z
+            );
+        }
     }
 }

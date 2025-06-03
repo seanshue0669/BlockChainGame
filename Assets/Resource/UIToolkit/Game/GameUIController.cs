@@ -44,6 +44,7 @@ public class GameUIController : MonoBehaviour
     private void OnBackToMenu()
     {
         Debug.Log("BackToMenu button clicked");
+        Time.timeScale = 1.0f;
         SceneController.Instance.SwitchToScene("MainMenu");
     }
     public void ShowScoreBoard()

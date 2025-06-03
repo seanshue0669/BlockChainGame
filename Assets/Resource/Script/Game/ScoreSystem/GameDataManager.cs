@@ -27,7 +27,6 @@ public class GameDataManager : MonoBehaviour
 
     private void Start()
     {
-        Time.timeScale = 1f;
         gameDataSO.resetData();
         gameDataSO.setStartTime(Time.time);
     }
