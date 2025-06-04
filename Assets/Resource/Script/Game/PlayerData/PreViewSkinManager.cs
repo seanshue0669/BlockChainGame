@@ -1,21 +1,21 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
-public class SkinManager : MonoBehaviour
+public class PreViewSkinManager : MonoBehaviour
 {
     //Singleton for GameDataManager
-    private static SkinManager _instance;
-    public static SkinManager Instance
+    private static PreViewSkinManager _instance;
+    public static PreViewSkinManager Instance
     {
         get
         {
             if (_instance == null)
             {
-                _instance = FindFirstObjectByType<SkinManager>();
+                _instance = FindFirstObjectByType<PreViewSkinManager>();
                 //Just for Safe
                 if (_instance == null)
                 {
                     GameObject go = GameObject.Find("Manager");
-                    _instance = go.AddComponent<SkinManager>();
+                    _instance = go.AddComponent<PreViewSkinManager>();
                 }
             }
             return _instance;
@@ -34,20 +34,13 @@ public class SkinManager : MonoBehaviour
 
     Material mat => targetRenderer.material;
 
-    void Update()
-    {
-        if (Input.GetKeyUp(KeyCode.Escape))
-        {
-            ApplySkinChange();
-        }
-    }
     void OnEnable()
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        StartCoroutine(DelayedFindAndApply());
+        StartCoroutine(DelayedFindAndApply()); 
     }
 
     private System.Collections.IEnumerator DelayedFindAndApply()
@@ -62,7 +55,7 @@ public class SkinManager : MonoBehaviour
     {
         if (targetRenderer == null)
         {
-            GameObject obj = GameObject.FindGameObjectWithTag("Player");
+            GameObject obj = GameObject.FindGameObjectWithTag("SkinTag");
 
             if (obj != null)
             {
@@ -73,16 +66,27 @@ public class SkinManager : MonoBehaviour
                 {
                     targetRenderer = renderer;
 
+                    Debug.Log("[SkinManager] Bnd Renderer and Apply texture¡I");
                 }
-
+                else
+                {
+                    Debug.LogWarning("[SkinManager] Find obj but no Renderer comp¡I");
+                }
             }
-
+            else
+            {
+                Debug.LogWarning("[SkinManager] Cant fnd tag 'SkinTag'¡I");
+            }
+        }
+        else
+        {
+            Debug.Log("[SkinManager] Skip Find¡C");
         }
     }
-    void ApplySkinChange()
+    public void ApplySkinChange()
     {
         Debug.Log($"[ApplySkinChange] rarity: {skinSO.rarity}, wear: {skinSO.wear}");
-        if (targetRenderer != null)
+        if(targetRenderer != null)
         {
             ApplyMainText(skinSO.rarity);
             ApplyParameter(skinSO.wear);
@@ -114,4 +118,3 @@ public class SkinManager : MonoBehaviour
         mat.SetFloat("_Glossiness", 1 - wear);
     }
 }
-

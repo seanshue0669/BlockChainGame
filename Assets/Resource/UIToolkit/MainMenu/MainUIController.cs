@@ -1,7 +1,12 @@
+using UnityEditor.UIElements;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 using static UnityEngine.Rendering.DebugUI.MessageBox;
+using UnityEngine.UI;
+using Button = UnityEngine.UIElements.Button;
+using Slider = UnityEngine.UIElements.Slider;
 
 public class MainUIController : MonoBehaviour
 {
@@ -24,13 +29,22 @@ public class MainUIController : MonoBehaviour
 
     private VisualElement _skinViewGroup;
 
+    [SerializeField]
+    public SkinSO skinSO;
+
+    void OnEnable()
+    {
+        var root = GetComponent<UIDocument>().rootVisualElement;
+        root.Bind(new SerializedObject(skinSO));
+    }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
 
         var root = GetComponent<UIDocument>().rootVisualElement;
-
+        skinSO.wear = 0;
+        skinSO.rarity = 0;
         // Find VE in root
         if (root != null)
         {
@@ -93,6 +107,39 @@ public class MainUIController : MonoBehaviour
         _viewSkinButton   = root.Q<Button>("ViewSkinButton");
         _viewSkinButton?.RegisterCallback<ClickEvent>(evt => OnViewSkinClicked());
 
+
+        var slider = root.Q<Slider>("Wear");
+        slider.RegisterValueChangedCallback(evt =>
+        {
+            skinSO.wear = evt.newValue;
+            PreViewSkinManager.Instance.ApplySkinChange();
+        });
+
+        var pclosebutton = root.Q<Button>("closePreview");
+        pclosebutton?.RegisterCallback<ClickEvent>(evt => OnPcloseClicked());
+
+        var select = root.Q<DropdownField>("SkinMenu");
+ 
+        select?.RegisterValueChangedCallback(evt =>
+        {
+            switch (evt.newValue)
+            {
+                case "normalTomato":
+                    skinSO.rarity = 0;
+                    break;
+                case "rareTomato":
+                    skinSO.rarity = 1;
+                    break;
+                case "epicTomato":
+                    skinSO.rarity = 2;
+                    break;
+                default:
+                    skinSO.rarity = 3;
+                    break;
+            }
+
+            PreViewSkinManager.Instance.ApplySkinChange();
+        });
     }
 
     #region CB_Function(lotteryButtons)
@@ -140,6 +187,10 @@ public class MainUIController : MonoBehaviour
     {
         _skinViewGroup.style.display = DisplayStyle.Flex;
         Debug.Log("View Skin button clicked");
+    }
+    private void OnPcloseClicked()
+    {
+        _skinViewGroup.style.display = DisplayStyle.None;
     }
     #endregion
 

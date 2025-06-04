@@ -97,12 +97,13 @@ Shader "Custom/HLSL_Lambert_MaskBlend_WithWear"
                 float3 normalWS = normalize(input.normalWS);
                 Light mainLight = GetMainLight();
                 float3 lightDir = normalize(mainLight.direction);
-                float NdotL     = max(0, dot(normalWS, lightDir));
+                float NdotL     = max(0, dot(normalWS, lightDir));  
                 float3 lambert  = blendedColor.rgb * mainLight.color * NdotL;
 
+                float intes = _Wear > 0.85?1:100;
                 float3 viewDir = normalize(_WorldSpaceCameraPos - TransformObjectToWorld(input.positionHCS).xyz);
                 float3 halfDir = normalize(lightDir + viewDir);
-                float spec = pow(max(0, dot(normalWS, halfDir)), 32.0) * _Glossiness*50;
+                float spec = pow(max(0, dot(normalWS, halfDir)), 32.0) * _Glossiness*intes;
 
                 if (threshold < 1e-5 || _Wear >= threshold)
                 {
