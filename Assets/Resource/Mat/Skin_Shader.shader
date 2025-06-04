@@ -55,7 +55,9 @@ Shader "Custom/HLSL_Lambert_MaskBlend_WithWear"
                 float2 uv          : TEXCOORD0;
                 float2 uv2         : TEXCOORD1;
                 float3 normalWS    : TEXCOORD2;
+                float3 positionWS  : TEXCOORD3; 
             };
+
 
             Varyings vert(Attributes input)
             {
@@ -64,6 +66,8 @@ Shader "Custom/HLSL_Lambert_MaskBlend_WithWear"
                 output.uv         = TRANSFORM_TEX(input.uv,   _MainTex);
                 output.uv2        = TRANSFORM_TEX(input.uv2,  _MaskTex);
                 output.normalWS   = TransformObjectToWorldNormal(input.normalOS);
+                output.positionWS = TransformObjectToWorld(input.positionOS.xyz);
+
                 return output;
             }
 
@@ -101,7 +105,8 @@ Shader "Custom/HLSL_Lambert_MaskBlend_WithWear"
                 float3 lambert  = blendedColor.rgb * mainLight.color * NdotL;
 
                 float intes = _Wear > 0.85?1:100;
-                float3 viewDir = normalize(_WorldSpaceCameraPos - TransformObjectToWorld(input.positionHCS).xyz);
+                float3 viewDir = normalize(_WorldSpaceCameraPos - input.positionWS);
+
                 float3 halfDir = normalize(lightDir + viewDir);
                 float spec = pow(max(0, dot(normalWS, halfDir)), 32.0) * _Glossiness*intes;
 
