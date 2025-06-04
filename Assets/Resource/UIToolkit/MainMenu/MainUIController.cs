@@ -1,10 +1,7 @@
-using UnityEditor.UIElements;
-using UnityEditor;
+
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
-using static UnityEngine.Rendering.DebugUI.MessageBox;
-using UnityEngine.UI;
+
 using Button = UnityEngine.UIElements.Button;
 using Slider = UnityEngine.UIElements.Slider;
 
@@ -32,11 +29,6 @@ public class MainUIController : MonoBehaviour
     [SerializeField]
     public SkinSO skinSO;
 
-    void OnEnable()
-    {
-        var root = GetComponent<UIDocument>().rootVisualElement;
-        root.Bind(new SerializedObject(skinSO));
-    }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
