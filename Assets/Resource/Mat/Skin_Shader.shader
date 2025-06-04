@@ -26,17 +26,9 @@ Shader "Custom/HLSL_Lambert_MaskBlend_WithWear"
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
 
-            TEXTURE2D(_MainTex);
-            SAMPLER(sampler_MainTex);
-            float4 _MainTex_ST;
-
-            TEXTURE2D(_DirtyTex);
-            SAMPLER(sampler_DirtyTex);
-            float4 _DirtyTex_ST;
-
-            TEXTURE2D(_MaskTex);
-            SAMPLER(sampler_MaskTex);
-            float4 _MaskTex_ST;
+            TEXTURE2D(_MainTex);      SAMPLER(sampler_MainTex);      float4 _MainTex_ST;
+            TEXTURE2D(_DirtyTex);     SAMPLER(sampler_DirtyTex);     float4 _DirtyTex_ST;
+            TEXTURE2D(_MaskTex);      SAMPLER(sampler_MaskTex);      float4 _MaskTex_ST;
 
             float _Wear;
             float _Glossiness;
@@ -55,19 +47,17 @@ Shader "Custom/HLSL_Lambert_MaskBlend_WithWear"
                 float2 uv          : TEXCOORD0;
                 float2 uv2         : TEXCOORD1;
                 float3 normalWS    : TEXCOORD2;
-                float3 positionWS  : TEXCOORD3; 
+                float3 positionWS  : TEXCOORD3;
             };
-
 
             Varyings vert(Attributes input)
             {
                 Varyings output;
                 output.positionHCS = TransformObjectToHClip(input.positionOS.xyz);
-                output.uv         = TRANSFORM_TEX(input.uv,   _MainTex);
-                output.uv2        = TRANSFORM_TEX(input.uv2,  _MaskTex);
-                output.normalWS   = TransformObjectToWorldNormal(input.normalOS);
-                output.positionWS = TransformObjectToWorld(input.positionOS.xyz);
-
+                output.uv          = TRANSFORM_TEX(input.uv, _MainTex);
+                output.uv2         = TRANSFORM_TEX(input.uv2, _MaskTex);
+                output.normalWS    = TransformObjectToWorldNormal(input.normalOS);
+                output.positionWS  = TransformObjectToWorld(input.positionOS.xyz); // ? ­×¥¿³o¸Ì
                 return output;
             }
 
@@ -78,24 +68,17 @@ Shader "Custom/HLSL_Lambert_MaskBlend_WithWear"
                 float4 maskColor  = SAMPLE_TEXTURE2D(_MaskTex,   sampler_MaskTex,  input.uv2);
 
                 float threshold = maskColor.r;
-                _Wear = _Wear * 0.1;
+                float wearFactor = _Wear * 0.1;
 
                 float4 blendedColor;
-                if (threshold < 1e-5)
+                if (threshold < 1e-5 || wearFactor >= threshold)
                 {
                     blendedColor = dirtyColor;
                 }
                 else
                 {
-                    if (_Wear >= threshold)
-                    {
-                        blendedColor = dirtyColor;
-                    }
-                    else
-                    {
-                        float blendFactor = saturate(_Wear / threshold);
-                        blendedColor = lerp(cleanColor, dirtyColor, blendFactor);
-                    }
+                    float blendFactor = saturate(wearFactor / threshold);
+                    blendedColor = lerp(cleanColor, dirtyColor, blendFactor);
                 }
 
                 float3 normalWS = normalize(input.normalWS);
@@ -104,13 +87,11 @@ Shader "Custom/HLSL_Lambert_MaskBlend_WithWear"
                 float NdotL     = max(0, dot(normalWS, lightDir));  
                 float3 lambert  = blendedColor.rgb * mainLight.color * NdotL;
 
-                float intes = _Wear > 0.85?1:100;
                 float3 viewDir = normalize(_WorldSpaceCameraPos - input.positionWS);
-
                 float3 halfDir = normalize(lightDir + viewDir);
-                float spec = pow(max(0, dot(normalWS, halfDir)), 32.0) * _Glossiness*intes;
+                float spec = pow(max(0, dot(normalWS, halfDir)), 32.0) * _Glossiness*50;
 
-                if (threshold < 1e-5 || _Wear >= threshold)
+                if (threshold < 1e-5 || wearFactor >= threshold)
                 {
                     spec = 0;
                 }
@@ -120,7 +101,6 @@ Shader "Custom/HLSL_Lambert_MaskBlend_WithWear"
 
                 return float4(finalColor, blendedColor.a);
             }
-
             ENDHLSL
         }
     }
