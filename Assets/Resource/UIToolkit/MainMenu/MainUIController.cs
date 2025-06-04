@@ -1,7 +1,15 @@
+using System;
+using System.Numerics;
+using System.Runtime.InteropServices;
+using Thirdweb;
+using Thirdweb.Unity;
+using Unity.Burst.CompilerServices;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
-using static UnityEngine.Rendering.DebugUI.MessageBox;
+using System.Threading.Tasks;
+
+//using static UnityEngine.Rendering.DebugUI.MessageBox;
 
 public class MainUIController : MonoBehaviour
 {
@@ -13,7 +21,6 @@ public class MainUIController : MonoBehaviour
     private Button _settingsButton;
     private Button _lotteryButton;
     private Button _marketButton;
-
 
     private VisualElement _settingsGroup;
 
@@ -28,7 +35,6 @@ public class MainUIController : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-
         var root = GetComponent<UIDocument>().rootVisualElement;
 
         // Find VE in root
@@ -41,7 +47,6 @@ public class MainUIController : MonoBehaviour
 
         // Start The looping animaton
         Invoke("LoopAnimation", 0.1f);
-
     }
 
     private void LoopAnimation()
@@ -62,8 +67,6 @@ public class MainUIController : MonoBehaviour
         _skinViewGroup = root.Q<VisualElement>("right-panel");
         _skinViewGroup.style.display = DisplayStyle.None;
     }
-
-
 
     private void BindUIEvent(VisualElement root)
     {
@@ -98,21 +101,29 @@ public class MainUIController : MonoBehaviour
     #region CB_Function(lotteryButtons)
     private void OnStartClicked()
     {
-        Debug.Log("Start button clicked");
-        SceneController.Instance.SwitchToScene("Game");
+        if (WalletManager.isBind)
+        {
+            Debug.Log("Start button clicked");
+            SceneController.Instance.SwitchToScene("Game");
+        }
     }
 
-    private void OnSettingsClicked()
+    private async void OnSettingsClicked()
     {
         Debug.Log("Settings button clicked");
         CameraController.Instance.SwitchBetween("settings");
         switchSettingMenu();
+
+        await WalletManager.GetMyNftRarityAndWear();
     }
 
     private void OnLotteryClicked()
     {
-        Debug.Log("Lottery button clicked");
-        SceneController.Instance.SwitchToScene("Lottery");
+        if (WalletManager.isBind)
+        {
+            Debug.Log("Lottery button clicked");
+            SceneController.Instance.SwitchToScene("Lottery");
+        }
     }
 
     private void OnMarketClicked()
@@ -130,7 +141,7 @@ public class MainUIController : MonoBehaviour
     }
     private void OnBindWalletClicked()
     {
-        Debug.Log("Bind Wallet button clicked");
+        WalletManager.ConnectWalletOnclick();
     }
     private void OnChooseSkinClicked()
     {
@@ -157,4 +168,6 @@ public class MainUIController : MonoBehaviour
         _lobbyGroup.style.display = DisplayStyle.None;
     }
     #endregion
+
+   
 }
