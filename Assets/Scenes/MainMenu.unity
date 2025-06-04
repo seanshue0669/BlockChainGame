@@ -131,6 +131,7 @@ GameObject:
   - component: {fileID: 22976202}
   - component: {fileID: 22976204}
   - component: {fileID: 22976205}
+  - component: {fileID: 22976206}
   m_Layer: 0
   m_Name: Manager
   m_TagString: Untagged
@@ -189,6 +190,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50e3d79c4a14b824382410d3313e047f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &22976206
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 22976201}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8869b6e1c03f6d24dab4ca307fdab26c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetRenderer: {fileID: 1255130297}
+  deflaut: {fileID: 2800000, guid: 0fde48cb9bcd2474d8d3d198088038a0, type: 3}
+  normal: {fileID: 2800000, guid: 852114f321a36b848b8c817ff414d74d, type: 3}
+  rare: {fileID: 2800000, guid: bb782d748281851468b9762fc3d77888, type: 3}
+  epic: {fileID: 2800000, guid: 1f6e86239516d684388ee817a18b1207, type: 3}
+  skinSO: {fileID: 11400000, guid: 0bdcd2b4fcb83f44c940844f8563d305, type: 2}
 --- !u!4 &45700282 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 271846718927261218, guid: 5cf40183208845844bb12709b2a3ab8f, type: 3}
@@ -2719,6 +2738,11 @@ MonoBehaviour:
   moveAxis: 1
   amplitude: 0.15
   speed: 0.1
+--- !u!23 &1255130297 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 5287713367914797056, guid: 49866ec1029b741468ca8997945363cb, type: 3}
+  m_PrefabInstance: {fileID: 1380241112}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1257277925
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3087,6 +3111,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Tomato (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 5287713367912859328, guid: 49866ec1029b741468ca8997945363cb, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 5287713367914797056, guid: 49866ec1029b741468ca8997945363cb, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: a9c34208762c793468bebbccc83845d4, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
