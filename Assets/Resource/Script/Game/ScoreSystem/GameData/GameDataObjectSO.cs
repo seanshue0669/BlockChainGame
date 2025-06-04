@@ -46,7 +46,6 @@ public class GameDataObjectSO : ScriptableObject
     public float calScoreMultiply()
     {
         float a = 0.01f;
-        float b = 0.5f;
 
         return (1f + a * _totalPlayTime)* score;
     }

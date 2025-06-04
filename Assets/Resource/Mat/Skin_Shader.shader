@@ -1,10 +1,12 @@
-Shader "Custom/HLSL_Lambert_MaskBlend"
+Shader "Custom/HLSL_Lambert_MaskBlend_WithWear"
 {
     Properties
     {
-        _MainTex ("Main Texture", 2D) = "white" {}
-        _MaskTex ("Mask Texture", 2D) = "black" {}
-        _Strength ("Blend Strength", Range(0, 1)) = 0.5
+        _MainTex    ("Main Texture",    2D) = "white" {}
+        _DirtyTex   ("Dirty Texture",   2D) = "black" {}
+        _MaskTex    ("Mask Texture",    2D) = "black" {}
+        _Wear       ("Wear Amount",     Range(0,1)) = 0.0
+        _Glossiness ("Specular Gloss",  Range(0,1)) = 0.3
     }
 
     SubShader
@@ -24,16 +26,20 @@ Shader "Custom/HLSL_Lambert_MaskBlend"
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
 
-
             TEXTURE2D(_MainTex);
             SAMPLER(sampler_MainTex);
             float4 _MainTex_ST;
+
+            TEXTURE2D(_DirtyTex);
+            SAMPLER(sampler_DirtyTex);
+            float4 _DirtyTex_ST;
 
             TEXTURE2D(_MaskTex);
             SAMPLER(sampler_MaskTex);
             float4 _MaskTex_ST;
 
-            float _Strength;
+            float _Wear;
+            float _Glossiness;
 
             struct Attributes
             {
@@ -55,31 +61,60 @@ Shader "Custom/HLSL_Lambert_MaskBlend"
             {
                 Varyings output;
                 output.positionHCS = TransformObjectToHClip(input.positionOS.xyz);
-                output.uv = TRANSFORM_TEX(input.uv, _MainTex);
-                output.uv2 = TRANSFORM_TEX(input.uv2, _MaskTex);
-                output.normalWS = TransformObjectToWorldNormal(input.normalOS);
+                output.uv         = TRANSFORM_TEX(input.uv,   _MainTex);
+                output.uv2        = TRANSFORM_TEX(input.uv2,  _MaskTex);
+                output.normalWS   = TransformObjectToWorldNormal(input.normalOS);
                 return output;
             }
 
             float4 frag(Varyings input) : SV_Target
             {
-                float4 baseColor = SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, input.uv);
-                float4 maskColor = SAMPLE_TEXTURE2D(_MaskTex, sampler_MaskTex, input.uv2);
-                float4 blendedColor = lerp(baseColor, maskColor, _Strength);
+                float4 cleanColor = SAMPLE_TEXTURE2D(_MainTex,   sampler_MainTex, input.uv2);
+                float4 dirtyColor = SAMPLE_TEXTURE2D(_DirtyTex,  sampler_DirtyTex, input.uv2);
+                float4 maskColor  = SAMPLE_TEXTURE2D(_MaskTex,   sampler_MaskTex,  input.uv2);
+
+                float threshold = maskColor.r;
+                _Wear = _Wear * 0.1;
+
+                float4 blendedColor;
+                if (threshold < 1e-5)
+                {
+                    blendedColor = dirtyColor;
+                }
+                else
+                {
+                    if (_Wear >= threshold)
+                    {
+                        blendedColor = dirtyColor;
+                    }
+                    else
+                    {
+                        float blendFactor = saturate(_Wear / threshold);
+                        blendedColor = lerp(cleanColor, dirtyColor, blendFactor);
+                    }
+                }
 
                 float3 normalWS = normalize(input.normalWS);
-
                 Light mainLight = GetMainLight();
                 float3 lightDir = normalize(mainLight.direction);
-                float NdotL = max(0, dot(normalWS, lightDir));
-                float3 lambert = blendedColor.rgb * mainLight.color * NdotL;
+                float NdotL     = max(0, dot(normalWS, lightDir));  
+                float3 lambert  = blendedColor.rgb * mainLight.color * NdotL;
 
-                float3 ambient = SampleSH(normalWS); 
-                float3 finalColor = lambert + ambient * blendedColor.rgb;
+                float intes = _Wear > 0.85?1:100;
+                float3 viewDir = normalize(_WorldSpaceCameraPos - TransformObjectToWorld(input.positionHCS).xyz);
+                float3 halfDir = normalize(lightDir + viewDir);
+                float spec = pow(max(0, dot(normalWS, halfDir)), 32.0) * _Glossiness*intes;
+
+                if (threshold < 1e-5 || _Wear >= threshold)
+                {
+                    spec = 0;
+                }
+
+                float3 ambient = SampleSH(normalWS);
+                float3 finalColor = lambert + ambient * blendedColor.rgb + spec;
 
                 return float4(finalColor, blendedColor.a);
             }
-
 
             ENDHLSL
         }
