@@ -5,13 +5,26 @@
             <engine:VisualElement name="title-container" style="flex-grow: 1; justify-content: center; width: 120%; position: relative; background-size: 100% 80%; height: 50%; align-items: flex-start; align-self: flex-start; rotate: 7deg;">
                 <engine:Label text="Tomato Game" name="GameTitle" style="font-size: 94%; -unity-font-style: bold; width: 100%; color: rgb(255, 251, 201); -unity-text-outline-width: 1px; -unity-text-outline-color: rgb(0, 0, 0); transition-duration: 2s; transition-timing-function: linear;" />
             </engine:VisualElement>
-            <engine:VisualElement name="buttton-container" style="flex-grow: 1; justify-content: center; width: 100%; position: relative; background-size: 100% 70%; height: 80%; align-items: flex-start; align-self: flex-start;">
-                <engine:Button text="Start" name="StartButton" class="tilt button" />
-                <engine:Button text="Setting" name="SettingButton" class="tilt button" />
-                <engine:Button text="Tomato Lottery" name="LotteryButton" class="tilt button" />
-                <engine:Button text="Tomato Market&#10;" name="MarketButton" class="tilt button" />
+            <engine:VisualElement name="buttton-container-root" enabled="true" style="flex-grow: 1; justify-content: center; width: 100%; position: relative; background-size: 100% 70%; height: 100%; align-items: flex-start; align-self: flex-start; flex-basis: auto; flex-direction: column;">
+                <engine:VisualElement name="buttton-container-lobby" enabled="true" style="flex-grow: 1; justify-content: center; width: 100%; position: absolute; background-size: 100% 70%; height: 80%; align-items: flex-start; align-self: flex-start; opacity: 1;">
+                    <engine:Button text="Start" name="StartButton" class="tilt button" />
+                    <engine:Button text="Setting" name="SettingButton" class="tilt button" />
+                    <engine:Button text="Tomato Lottery" name="LotteryButton" class="tilt button" />
+                    <engine:Button text="Tomato Market&#10;" name="MarketButton" class="tilt button" />
+                </engine:VisualElement>
+                <engine:VisualElement name="buttton-container-settings" enabled="true" style="flex-grow: 1; justify-content: center; width: 100%; position: absolute; background-size: 100% 70%; height: 80%; align-items: flex-start; align-self: flex-start;">
+                    <engine:Button text="Back" name="BackButton" class="tilt button" />
+                    <engine:Button text="Bind Wallet" name="BindWalletButton" class="tilt button" />
+                    <engine:Button text="Choose skin" name="ChooseSkinButton" class="tilt button" />
+                    <engine:Button text="View Skin" name="ViewSkinButton" class="tilt button" />
+                </engine:VisualElement>
             </engine:VisualElement>
         </engine:VisualElement>
-        <engine:VisualElement name="right-panel" class="right-panel" style="flex-grow: 1; opacity: 1; width: 0; background-color: rgba(34, 34, 34, 0);" />
+        <engine:VisualElement name="right-panel" class="right-panel" style="flex-grow: 1; opacity: 1; width: 0; background-color: rgba(34, 34, 34, 0);">
+            <engine:VisualElement name="skinpreview" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/Resource/Mat/Materia_preview.renderTexture?fileID=8400000&amp;guid=133a429a8dcdcc44fa5adfad91704dc3&amp;type=2#Materia_preview&quot;); background-color: rgb(255, 255, 255); width: 743px; height: 743px; background-size: contain; max-height: none; -unity-background-scale-mode: stretch-to-fill; position: absolute; justify-content: center; align-items: center; left: 278px; top: 68px; border-top-left-radius: 40px; border-top-right-radius: 40px; border-bottom-right-radius: 40px; border-bottom-left-radius: 40px; border-top-width: 6px; border-right-width: 6px; border-bottom-width: 6px; border-left-width: 6px; border-left-color: rgba(202, 81, 9, 0); border-right-color: rgba(202, 81, 9, 0); border-top-color: rgba(202, 81, 9, 0); border-bottom-color: rgba(202, 81, 9, 0);" />
+            <engine:Button text="X" style="position: absolute; top: 98px; left: 304px; font-size: 36px; height: 50px; width: 52px; border-top-width: 7px; border-right-width: 7px; border-bottom-width: 7px; border-left-width: 7px; border-top-left-radius: 14px; border-top-right-radius: 14px; border-bottom-right-radius: 14px; border-bottom-left-radius: 14px;" />
+            <engine:DropdownField label="Dropdown" style="height: 54px; width: 560px; position: absolute; top: 88px; left: 412px; font-size: 30px;" />
+            <engine:Slider label="Slider" value="42" high-value="100" style="position: absolute; top: 748px; left: 308px; height: 55px; width: 652px; font-size: 32px;" />
+        </engine:VisualElement>
     </engine:VisualElement>
 </engine:UXML>
