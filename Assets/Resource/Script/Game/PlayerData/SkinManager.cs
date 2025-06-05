@@ -90,7 +90,7 @@ public class SkinManager : MonoBehaviour
         }
     }
 
-    void ApplySkinChange()
+    public void ApplySkinChange()
     {
         if (targetRenderer == null || mat == null)
         {
