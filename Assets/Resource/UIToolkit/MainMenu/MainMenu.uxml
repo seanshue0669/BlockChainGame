@@ -22,17 +22,9 @@
         </engine:VisualElement>
         <engine:VisualElement name="right-panel" class="right-panel" style="flex-grow: 1; opacity: 1; width: 0; background-color: rgba(34, 34, 34, 0);">
             <engine:VisualElement name="skinpreview" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/Resource/Mat/Materia_preview.renderTexture?fileID=8400000&amp;guid=133a429a8dcdcc44fa5adfad91704dc3&amp;type=2#Materia_preview&quot;); background-color: rgb(255, 255, 255); width: 743px; height: 743px; background-size: contain; max-height: none; -unity-background-scale-mode: stretch-to-fill; position: absolute; justify-content: center; align-items: center; left: 278px; top: 68px; border-top-left-radius: 40px; border-top-right-radius: 40px; border-bottom-right-radius: 40px; border-bottom-left-radius: 40px; border-top-width: 6px; border-right-width: 6px; border-bottom-width: 6px; border-left-width: 6px; border-left-color: rgba(202, 81, 9, 0); border-right-color: rgba(202, 81, 9, 0); border-top-color: rgba(202, 81, 9, 0); border-bottom-color: rgba(202, 81, 9, 0);" />
-            <engine:Button text="X" name="closePreview" style="position: absolute; top: 88px; left: 304px; font-size: 36px; height: 50px; width: 52px; border-top-width: 7px; border-right-width: 7px; border-bottom-width: 7px; border-left-width: 7px; border-top-left-radius: 14px; border-top-right-radius: 14px; border-bottom-right-radius: 14px; border-bottom-left-radius: 14px;" />
-            <engine:DropdownField name="SkinMenu" choices="normalTomato,rareTomato,epicTomato,deflautTomato" index="0" style="height: 54px; width: 560px; position: absolute; top: 86px; left: 412px; font-size: 30px;">
-                <Bindings>
-                    <engine:DataBinding property="label" data-source="project://database/Assets/Resource/Script/Game/PlayerData/PreviewSkinSO.asset?fileID=11400000&amp;guid=7be8cfddd71d2a646b7a9c8abe4b8018&amp;type=2#PreviewSkinSO" binding-mode="ToSource" data-source-path="_rarity_k__BackingField" />
-                </Bindings>
-            </engine:DropdownField>
-            <engine:Slider value="0.14" high-value="1" name="Wear" fill="true" show-input-field="false" inverted="false" style="position: absolute; top: 744px; left: 308px; height: 55px; width: 652px; font-size: 32px;">
-                <Bindings>
-                    <engine:DataBinding property="label" binding-mode="ToSource" data-source="project://database/Assets/Resource/Script/Game/PlayerData/PreviewSkinSO.asset?fileID=11400000&amp;guid=7be8cfddd71d2a646b7a9c8abe4b8018&amp;type=2#PreviewSkinSO" data-source-path="wear" />
-                </Bindings>
-            </engine:Slider>
+            <engine:Button text="X" style="position: absolute; top: 98px; left: 304px; font-size: 36px; height: 50px; width: 52px; border-top-width: 7px; border-right-width: 7px; border-bottom-width: 7px; border-left-width: 7px; border-top-left-radius: 14px; border-top-right-radius: 14px; border-bottom-right-radius: 14px; border-bottom-left-radius: 14px;" />
+            <engine:DropdownField label="Dropdown" style="height: 54px; width: 560px; position: absolute; top: 88px; left: 412px; font-size: 30px;" />
+            <engine:Slider label="Slider" value="42" high-value="100" style="position: absolute; top: 748px; left: 308px; height: 55px; width: 652px; font-size: 32px;" />
         </engine:VisualElement>
     </engine:VisualElement>
 </engine:UXML>

@@ -57,15 +57,15 @@ Shader "Custom/HLSL_MaskBlend_WithWear"
                 output.uv          = TRANSFORM_TEX(input.uv, _MainTex);
                 output.uv2         = TRANSFORM_TEX(input.uv2, _MaskTex);
                 output.normalWS    = TransformObjectToWorldNormal(input.normalOS);
-                output.positionWS  = TransformObjectToWorld(input.positionOS.xyz); // ? ­×¥¿³o¸Ì
+                output.positionWS  = TransformObjectToWorld(input.positionOS.xyz); // ? ï¿½×¥ï¿½ï¿½oï¿½ï¿½
                 return output;
             }
 
             float4 frag(Varyings input) : SV_Target
             {
-                float4 cleanColor = SAMPLE_TEXTURE2D(_MainTex,   sampler_MainTex, input.uv2);
-                float4 dirtyColor = SAMPLE_TEXTURE2D(_DirtyTex,  sampler_DirtyTex, input.uv2);
-                float4 maskColor  = SAMPLE_TEXTURE2D(_MaskTex,   sampler_MaskTex,  input.uv2);
+                float4 baseColor = SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, input.uv);
+                float4 maskColor = SAMPLE_TEXTURE2D(_MaskTex, sampler_MaskTex, input.uv2);
+                float4 blendedColor = lerp(baseColor, maskColor, _Strength);
 
                 float threshold = maskColor.r;
                 float wearFactor = _Wear * 0.1;
@@ -82,10 +82,11 @@ Shader "Custom/HLSL_MaskBlend_WithWear"
                 }
 
                 float3 normalWS = normalize(input.normalWS);
+
                 Light mainLight = GetMainLight();
                 float3 lightDir = normalize(mainLight.direction);
-                float NdotL     = max(0, dot(normalWS, lightDir));  
-                float3 lambert  = blendedColor.rgb * mainLight.color * NdotL;
+                float NdotL = max(0, dot(normalWS, lightDir));
+                float3 lambert = blendedColor.rgb * mainLight.color * NdotL;
 
                 float3 viewDir = normalize(_WorldSpaceCameraPos - input.positionWS.xyz);
                 float3 halfDir = normalize(lightDir + viewDir);

@@ -1,3 +1,5 @@
+using System;
+using Unity.Burst.CompilerServices;
 using UnityEngine;
 
 public class GameDataManager : MonoBehaviour
@@ -45,7 +47,9 @@ public class GameDataManager : MonoBehaviour
         //Trigger End UI
         GameUIController.Instance.ShowScoreBoard();
         //Send eth to target wallet
+        WalletManager.GetReward((long)giveCoinAmount);
     }
+
     private void StopTheGame()
     {
         gameDataSO.setEndTime(Time.time);
@@ -57,4 +61,6 @@ public class GameDataManager : MonoBehaviour
         float totalCoinGiven = gameDataSO.calScoreMultiply();
         return totalCoinGiven;
     }
+
+    
 }

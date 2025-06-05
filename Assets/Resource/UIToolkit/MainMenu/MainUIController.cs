@@ -1,9 +1,17 @@
-
+using System;
+using System.Numerics;
+using System.Runtime.InteropServices;
+using Thirdweb;
+using Thirdweb.Unity;
+using Unity.Burst.CompilerServices;
 using UnityEngine;
 using UnityEngine.UIElements;
 
 using Button = UnityEngine.UIElements.Button;
 using Slider = UnityEngine.UIElements.Slider;
+using System.Threading.Tasks;
+
+//using static UnityEngine.Rendering.DebugUI.MessageBox;
 
 public class MainUIController : MonoBehaviour
 {
@@ -16,7 +24,6 @@ public class MainUIController : MonoBehaviour
     private Button _lotteryButton;
     private Button _marketButton;
 
-
     private VisualElement _settingsGroup;
 
     private Button _backButton;
@@ -26,17 +33,18 @@ public class MainUIController : MonoBehaviour
 
     private VisualElement _skinViewGroup;
 
-    [SerializeField]
-    public SkinSO skinSO;
 
+    void OnEnable()
+    {
+        var root = GetComponent<UIDocument>().rootVisualElement;
+        root.Bind(new SerializedObject(skinSO));
+    }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-
         var root = GetComponent<UIDocument>().rootVisualElement;
-        skinSO.wear = 0;
-        skinSO.rarity = 0;
+
         // Find VE in root
         if (root != null)
         {
@@ -47,7 +55,6 @@ public class MainUIController : MonoBehaviour
 
         // Start The looping animaton
         Invoke("LoopAnimation", 0.1f);
-
     }
 
     private void LoopAnimation()
@@ -68,8 +75,6 @@ public class MainUIController : MonoBehaviour
         _skinViewGroup = root.Q<VisualElement>("right-panel");
         _skinViewGroup.style.display = DisplayStyle.None;
     }
-
-
 
     private void BindUIEvent(VisualElement root)
     {
@@ -99,59 +104,34 @@ public class MainUIController : MonoBehaviour
         _viewSkinButton   = root.Q<Button>("ViewSkinButton");
         _viewSkinButton?.RegisterCallback<ClickEvent>(evt => OnViewSkinClicked());
 
-
-        var slider = root.Q<Slider>("Wear");
-        slider.RegisterValueChangedCallback(evt =>
-        {
-            skinSO.wear = evt.newValue;
-            PreViewSkinManager.Instance.ApplySkinChange();
-        });
-
-        var pclosebutton = root.Q<Button>("closePreview");
-        pclosebutton?.RegisterCallback<ClickEvent>(evt => OnPcloseClicked());
-
-        var select = root.Q<DropdownField>("SkinMenu");
- 
-        select?.RegisterValueChangedCallback(evt =>
-        {
-            switch (evt.newValue)
-            {
-                case "normalTomato":
-                    skinSO.rarity = 0;
-                    break;
-                case "rareTomato":
-                    skinSO.rarity = 1;
-                    break;
-                case "epicTomato":
-                    skinSO.rarity = 2;
-                    break;
-                default:
-                    skinSO.rarity = 3;
-                    break;
-            }
-
-            PreViewSkinManager.Instance.ApplySkinChange();
-        });
     }
 
     #region CB_Function(lotteryButtons)
     private void OnStartClicked()
     {
-        Debug.Log("Start button clicked");
-        SceneController.Instance.SwitchToScene("Game");
+        if (WalletManager.isBind)
+        {
+            Debug.Log("Start button clicked");
+            SceneController.Instance.SwitchToScene("Game");
+        }
     }
 
-    private void OnSettingsClicked()
+    private async void OnSettingsClicked()
     {
         Debug.Log("Settings button clicked");
         CameraController.Instance.SwitchBetween("settings");
         switchSettingMenu();
+
+        await WalletManager.GetMyNftRarityAndWear();
     }
 
     private void OnLotteryClicked()
     {
-        Debug.Log("Lottery button clicked");
-        SceneController.Instance.SwitchToScene("Lottery");
+        if (WalletManager.isBind)
+        {
+            Debug.Log("Lottery button clicked");
+            SceneController.Instance.SwitchToScene("Lottery");
+        }
     }
 
     private void OnMarketClicked()
@@ -169,7 +149,7 @@ public class MainUIController : MonoBehaviour
     }
     private void OnBindWalletClicked()
     {
-        Debug.Log("Bind Wallet button clicked");
+        WalletManager.ConnectWalletOnclick();
     }
     private void OnChooseSkinClicked()
     {
@@ -179,10 +159,6 @@ public class MainUIController : MonoBehaviour
     {
         _skinViewGroup.style.display = DisplayStyle.Flex;
         Debug.Log("View Skin button clicked");
-    }
-    private void OnPcloseClicked()
-    {
-        _skinViewGroup.style.display = DisplayStyle.None;
     }
     #endregion
 
@@ -200,4 +176,6 @@ public class MainUIController : MonoBehaviour
         _lobbyGroup.style.display = DisplayStyle.None;
     }
     #endregion
+
+   
 }

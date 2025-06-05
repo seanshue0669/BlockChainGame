@@ -1,6 +1,12 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/TextMesh Pro.meta
+guid: 3809fc1be54c3294bbdd2f2492369480
+folderAsset: yes
+DefaultImporter:
+========
 guid: f4e3bebb291beea47aa3c7019d01d253
 NativeFormatImporter:
+>>>>>>>> feature/GameScrpit:Assets/Resources/Mat/NewShaderVariants.shadervariants.meta
   externalObjects: {}
   mainObjectFileID: 20000000
   userData: 
