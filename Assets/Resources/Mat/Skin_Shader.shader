@@ -1,11 +1,11 @@
-Shader "Custom/HLSL_Lambert_MaskBlend_WithWear"
+Shader "Custom/HLSL_MaskBlend_WithWear"
 {
     Properties
     {
         _MainTex    ("Main Texture",    2D) = "white" {}
         _DirtyTex   ("Dirty Texture",   2D) = "black" {}
         _MaskTex    ("Mask Texture",    2D) = "black" {}
-        _Wear       ("Wear Amount",     Range(0,1)) = 0.0
+        _Wear       ("Wear Amount",     Range(0,1)) = 0.1
         _Glossiness ("Specular Gloss",  Range(0,1)) = 0.3
     }
 
@@ -87,7 +87,7 @@ Shader "Custom/HLSL_Lambert_MaskBlend_WithWear"
                 float NdotL     = max(0, dot(normalWS, lightDir));  
                 float3 lambert  = blendedColor.rgb * mainLight.color * NdotL;
 
-                float3 viewDir = normalize(_WorldSpaceCameraPos - input.positionWS);
+                float3 viewDir = normalize(_WorldSpaceCameraPos - input.positionWS.xyz);
                 float3 halfDir = normalize(lightDir + viewDir);
                 float spec = pow(max(0, dot(normalWS, halfDir)), 32.0) * _Glossiness*50;
 
@@ -97,6 +97,7 @@ Shader "Custom/HLSL_Lambert_MaskBlend_WithWear"
                 }
 
                 float3 ambient = SampleSH(normalWS);
+
                 float3 finalColor = lambert + ambient * blendedColor.rgb + spec;
 
                 return float4(finalColor, 1.0);

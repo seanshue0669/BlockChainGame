@@ -1,8 +1,9 @@
+
 using UnityEngine;
 using UnityEngine.SceneManagement;
+
 public class SkinManager : MonoBehaviour
 {
-    //Singleton for GameDataManager
     private static SkinManager _instance;
     public static SkinManager Instance
     {
@@ -11,10 +12,13 @@ public class SkinManager : MonoBehaviour
             if (_instance == null)
             {
                 _instance = FindFirstObjectByType<SkinManager>();
-                //Just for Safe
                 if (_instance == null)
                 {
                     GameObject go = GameObject.Find("Manager");
+                    if (go == null)
+                    {
+                        go = new GameObject("Manager");
+                    }
                     _instance = go.AddComponent<SkinManager>();
                 }
             }
@@ -32,8 +36,8 @@ public class SkinManager : MonoBehaviour
     [SerializeField]
     public SkinSO skinSO;
 
-    Material mat => targetRenderer.material;
-    
+    Material mat => targetRenderer != null ? targetRenderer.material : null;
+
     void Update()
     {
         if (Input.GetKeyUp(KeyCode.Escape))
@@ -41,10 +45,12 @@ public class SkinManager : MonoBehaviour
             ApplySkinChange();
         }
     }
+
     void OnEnable()
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
+
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         StartCoroutine(DelayedFindAndApply());
@@ -57,7 +63,6 @@ public class SkinManager : MonoBehaviour
         ApplySkinChange();
     }
 
-
     private void FindMat()
     {
         if (targetRenderer == null)
@@ -66,55 +71,88 @@ public class SkinManager : MonoBehaviour
 
             if (obj != null)
             {
-                Debug.Log("[SkinManager] Find SkinTag¡G" + obj.name);
-
+                Debug.Log("[SkinManager] Found Player with tag.");
                 Renderer renderer = obj.GetComponent<Renderer>();
                 if (renderer != null)
                 {
                     targetRenderer = renderer;
-
+                    Debug.Log("[SkinManager] Renderer assigned from Player.");
                 }
-
+                else
+                {
+                    Debug.LogWarning("[SkinManager] Player object found but has no Renderer.");
+                }
             }
-
+            else
+            {
+                Debug.LogWarning("[SkinManager] No GameObject with tag 'Player' found.");
+            }
         }
     }
+
     void ApplySkinChange()
     {
-        Debug.Log($"[ApplySkinChange] rarity: {skinSO.rarity}, wear: {skinSO.wear}");
-        if (targetRenderer != null)
+        if (targetRenderer == null || mat == null)
         {
-            ApplyMainText(skinSO.rarity);
-            ApplyParameter(skinSO.wear);
-            mat.SetTexture("_DirtyTex", Resources.Load<Texture2D>("Mat/Textures/dirty"));
-            mat.SetTexture("_MaskTex", Resources.Load<Texture2D>("Mat/Textures/mask"));
-
+            Debug.LogWarning("[SkinManager] Cannot apply skin: targetRenderer or material is null.");
+            return;
         }
+
+        Debug.Log($"[SkinManager] ApplySkinChange: rarity = {skinSO.rarity}, wear = {skinSO.wear}");
+
+        ApplyMainTex(skinSO.rarity);
+        ApplyParameters(skinSO.wear);
+        ApplyExtraTextures();
     }
 
-    void ApplyMainText(int rarity)
+    void ApplyMainTex(int rarity)
     {
-        switch (rarity)
+        Texture selected = rarity switch
         {
-            case 0:
-                mat.SetTexture("_MainTex", normal);
-                break;
-            case 1:
-                mat.SetTexture("_MainTex", rare);
-                break;
-            case 2:
-                mat.SetTexture("_MainTex", epic);
-                break;
-            default:
-                mat.SetTexture("_MainTex", deflaut);
-                break;
+            0 => normal,
+            1 => rare,
+            2 => epic,
+            _ => deflaut
+        };
+
+        if (selected == null)
+        {
+            Debug.LogError($"[SkinManager] Missing texture for rarity {rarity}. Applying white texture.");
+            selected = Texture2D.whiteTexture;
         }
+        else
+        {
+            Debug.Log($"[SkinManager] MainTex assigned: {selected.name}");
+        }
+
+        mat.SetTexture("_MainTex", selected);
     }
 
-    void ApplyParameter(float wear)
+    void ApplyParameters(float wear)
     {
         mat.SetFloat("_Wear", wear);
         mat.SetFloat("_Glossiness", 1 - wear);
     }
-}
 
+    void ApplyExtraTextures()
+    {
+        ApplySafeTexture("_DirtyTex", "Mat/Textures/dirty");
+        ApplySafeTexture("_MaskTex", "Mat/Textures/mask");
+    }
+
+    void ApplySafeTexture(string propertyName, string path)
+    {
+        Texture tex = Resources.Load<Texture2D>(path);
+        if (tex == null)
+        {
+            Debug.LogError($"[SkinManager] Missing texture at path: Resources/{path}. Using white fallback.");
+            tex = Texture2D.whiteTexture;
+        }
+        else
+        {
+            Debug.Log($"[SkinManager] Texture loaded for {propertyName}: {tex.name}");
+        }
+        mat.SetTexture(propertyName, tex);
+    }
+
+}
