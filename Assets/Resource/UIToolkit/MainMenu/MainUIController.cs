@@ -16,15 +16,14 @@ public class MainUIController : MonoBehaviour
     private Button _startButton;
     private Button _settingsButton;
     private Button _lotteryButton;
-    private Button _marketButton;
 
     private VisualElement _settingsGroup;
 
     private Button _backButton;
     private Button _bindWalletButton;
     private Button _chooseSkinButton;
-    private Button _viewSkinButton;
 
+    private DropdownField _skinSelecter;
 
 
 
@@ -57,9 +56,9 @@ public class MainUIController : MonoBehaviour
     {
         _lobbyGroup = root.Q<VisualElement>("buttton-container-lobby");
         _lobbyGroup.style.display = DisplayStyle.Flex;
-        _settingsGroup = root.Q<VisualElement>("buttton-container-settings");
-        _settingsGroup.style.display = DisplayStyle.None;
 
+        _skinSelecter = root.Q<DropdownField>("SkinSelector");
+        _lobbyGroup.style.display = DisplayStyle.None;
     }
 
     private void BindUIEvent(VisualElement root)
@@ -73,9 +72,6 @@ public class MainUIController : MonoBehaviour
 
         _lotteryButton  = root.Q<Button>("LotteryButton");
         _lotteryButton?.RegisterCallback<ClickEvent>(evt => OnLotteryClicked());
-
-        _marketButton   = root.Q<Button>("MarketButton");
-        _marketButton?.RegisterCallback<ClickEvent>(evt => OnMarketClicked());
 
         //settings
         _backButton       = root.Q<Button>("BackButton");
@@ -138,6 +134,11 @@ public class MainUIController : MonoBehaviour
     private void OnChooseSkinClicked()
     {
         Debug.Log("Choose Skin button clicked");
+
+        if(_lobbyGroup.style.display == DisplayStyle.Flex)
+            _lobbyGroup.style.display = DisplayStyle.None;
+        else if(_lobbyGroup.style.display == DisplayStyle.None)
+            _lobbyGroup.style.display = DisplayStyle.Flex;
     }
 
     #endregion
