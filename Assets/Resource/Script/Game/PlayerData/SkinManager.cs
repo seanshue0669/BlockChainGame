@@ -33,7 +33,7 @@ public class SkinManager : MonoBehaviour
     public SkinSO skinSO;
 
     Material mat => targetRenderer.material;
-
+    
     void Update()
     {
         if (Input.GetKeyUp(KeyCode.Escape))
@@ -86,6 +86,9 @@ public class SkinManager : MonoBehaviour
         {
             ApplyMainText(skinSO.rarity);
             ApplyParameter(skinSO.wear);
+            mat.SetTexture("_DirtyTex", Resources.Load<Texture2D>("Mat/Textures/dirty"));
+            mat.SetTexture("_MaskTex", Resources.Load<Texture2D>("Mat/Textures/mask"));
+
         }
     }
 

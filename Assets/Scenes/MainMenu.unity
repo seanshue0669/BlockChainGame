@@ -4116,7 +4116,7 @@ PrefabInstance:
     - target: {fileID: 4411972152262832417, guid: c00ea538aedf58a4fbf7d2308175e091, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 89a7f0e2d2b64574ca6f51a165101d1f, type: 2}
+      objectReference: {fileID: 2100000, guid: 0054cbb2942940f46a8872a0c6f7e495, type: 2}
     - target: {fileID: 5818855576741987075, guid: c00ea538aedf58a4fbf7d2308175e091, type: 3}
       propertyPath: m_Name
       value: InteractiveFurniture_10

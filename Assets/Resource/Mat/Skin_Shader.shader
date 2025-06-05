@@ -99,7 +99,7 @@ Shader "Custom/HLSL_Lambert_MaskBlend_WithWear"
                 float3 ambient = SampleSH(normalWS);
                 float3 finalColor = lambert + ambient * blendedColor.rgb + spec;
 
-                return float4(finalColor, blendedColor.a);
+                return float4(finalColor, 1.0);
             }
             ENDHLSL
         }
