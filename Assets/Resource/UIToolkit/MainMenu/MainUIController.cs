@@ -173,14 +173,6 @@ public class MainUIController : MonoBehaviour
                 choices.Add($"{i}: {rarity} / wear: {wearValue}");
             }
 
-            _skinSelector.choices = choices;
-            _skinSelector.index = 0;
-            _skinSelector.value = choices[0];
-
-            var (rarityStr, wear) = nftStats[0];
-            skinSO.rarity = Convert2Int(rarityStr);
-            skinSO.wear = wear / 100f;
-            SkinManager.Instance.ApplySkinChange();
 
             Debug.Log($"Loaded {choices.Count} skin options.");
         }
