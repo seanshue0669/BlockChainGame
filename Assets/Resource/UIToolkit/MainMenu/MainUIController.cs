@@ -101,7 +101,7 @@ public class MainUIController : MonoBehaviour
             {
                 var (rarityStr, wear) = WalletManager.myNftStats[index];
                 skinSO.rarity = Convert2Int(rarityStr);
-                skinSO.wear = wear / 100f;
+                skinSO.wear = wear / 1000f;
                 SkinManager.Instance.ApplySkinChange();
 
                 Debug.Log($"Applied skin {index}: {rarityStr}, wear: {wear}");
@@ -202,10 +202,10 @@ public class MainUIController : MonoBehaviour
                 return 0;
             case "rare":
                 return 1;
-            case "epic":
+            case "legendary":
                 return 2;
             default:
-                return 0; // fallback 
+                return -1; // fallback 
         }
     }
 
