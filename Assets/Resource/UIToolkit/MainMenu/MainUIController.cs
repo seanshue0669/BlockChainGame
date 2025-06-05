@@ -5,8 +5,10 @@ using Thirdweb;
 using Thirdweb.Unity;
 using Unity.Burst.CompilerServices;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
+
+using Button = UnityEngine.UIElements.Button;
+using Slider = UnityEngine.UIElements.Slider;
 using System.Threading.Tasks;
 
 //using static UnityEngine.Rendering.DebugUI.MessageBox;
@@ -31,6 +33,12 @@ public class MainUIController : MonoBehaviour
 
     private VisualElement _skinViewGroup;
 
+
+    void OnEnable()
+    {
+        var root = GetComponent<UIDocument>().rootVisualElement;
+        root.Bind(new SerializedObject(skinSO));
+    }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
