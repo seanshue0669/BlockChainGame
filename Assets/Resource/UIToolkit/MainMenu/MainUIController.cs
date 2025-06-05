@@ -1,15 +1,9 @@
-using System;
-using System.Numerics;
-using System.Runtime.InteropServices;
-using Thirdweb;
-using Thirdweb.Unity;
-using Unity.Burst.CompilerServices;
+
 using UnityEngine;
 using UnityEngine.UIElements;
 
 using Button = UnityEngine.UIElements.Button;
-using Slider = UnityEngine.UIElements.Slider;
-using System.Threading.Tasks;
+
 
 //using static UnityEngine.Rendering.DebugUI.MessageBox;
 
@@ -31,14 +25,8 @@ public class MainUIController : MonoBehaviour
     private Button _chooseSkinButton;
     private Button _viewSkinButton;
 
-    private VisualElement _skinViewGroup;
 
 
-    void OnEnable()
-    {
-        var root = GetComponent<UIDocument>().rootVisualElement;
-        root.Bind(new SerializedObject(skinSO));
-    }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -72,8 +60,6 @@ public class MainUIController : MonoBehaviour
         _settingsGroup = root.Q<VisualElement>("buttton-container-settings");
         _settingsGroup.style.display = DisplayStyle.None;
 
-        _skinViewGroup = root.Q<VisualElement>("right-panel");
-        _skinViewGroup.style.display = DisplayStyle.None;
     }
 
     private void BindUIEvent(VisualElement root)
@@ -101,8 +87,6 @@ public class MainUIController : MonoBehaviour
         _chooseSkinButton = root.Q<Button>("ChooseSkinButton");
         _chooseSkinButton?.RegisterCallback<ClickEvent>(evt => OnChooseSkinClicked());
 
-        _viewSkinButton   = root.Q<Button>("ViewSkinButton");
-        _viewSkinButton?.RegisterCallback<ClickEvent>(evt => OnViewSkinClicked());
 
     }
 
@@ -155,11 +139,7 @@ public class MainUIController : MonoBehaviour
     {
         Debug.Log("Choose Skin button clicked");
     }
-    private void OnViewSkinClicked()
-    {
-        _skinViewGroup.style.display = DisplayStyle.Flex;
-        Debug.Log("View Skin button clicked");
-    }
+
     #endregion
 
     #region UISwitch
